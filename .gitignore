@@ -11,4 +11,4 @@ wheels/
 .env
 
 #Test files
-lorem.txt
+*lorem.txt
