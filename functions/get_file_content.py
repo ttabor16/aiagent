@@ -8,7 +8,7 @@ def get_file_content(working_directory, file_path):
     if not absolute_path.startswith(absolute_directory):
         return f'Error: Cannot read "{file_path}" as it is outside the permitted working directory'
     if os.path.isdir(full_path):
-        return f'Error: File not found or is not a regular file: "{directory}"'
+        return f'Error: File not found or is not a regular file: "{file_path}"'
     try:
         with open(absolute_path,"r") as f:
             file_content_string = f.read(MAX_CHARS)
