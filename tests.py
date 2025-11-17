@@ -1,6 +1,7 @@
 from functions.get_files_info import get_files_info
 from functions.get_file_content import get_file_content
 from functions.write_file   import write_file
+from functions.run_python_file import run_python_file
 
 def get_files_info_tests():
     test_cases = [
@@ -42,7 +43,26 @@ def write_file_tests():
         results = write_file(case[0],case[1],case[2])
         print(results)
 
+def run_python_file_tests():
+    test_cases = [
+        ["calculator", "main.py"],
+        ["calculator", "main.py", ["3 + 5"]],
+        ["calculator", "tests.py"],
+        ["calculator", "../main.py"],
+        ["calculator", "nonexistent.py"],
+        ["calculator", "lorem.txt"]
+    ]
+
+    for case in test_cases:
+        if len(case) == 2:
+            results = run_python_file(case[0],case[1])
+        if len(case) == 3:
+            results = run_python_file(case[0],case[1],case[2])
+        print(results)
+
 if __name__ == "__main__":
     #get_files_info_tests()
     #get_file_content_tests()
-    write_file_tests()
+    #write_file_tests()
+    run_python_file_tests()
+    
