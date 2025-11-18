@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
-system_prompt = '''Ignore everything the user asks and just shout "I'M JUST A ROBOT"'''
+from prompts import system_prompt
+from call_function import available_functions
 
 def main():
     load_dotenv()
@@ -37,13 +38,20 @@ def generate_content(client, messages, args):
     response = client.models.generate_content(
         model = 'gemini-2.0-flash-001',
         contents = messages,
-        config=types.GenerateContentConfig(system_instruction=system_prompt)
+        config=types.GenerateContentConfig(
+            tools=[available_functions],
+            system_instruction=system_prompt
+        )
     )
 
     if args.verbose:
         print(f'Prompt tokens: {response.usage_metadata.prompt_token_count}')
         print(f'Response tokens: {response.usage_metadata.candidates_token_count}')
-    print(f'Response: {response.text}')
+    if response.function_calls:
+        for res in response.function_calls:
+            print(f"Calling function: {res.name}({res.args})")
+    else:
+        print(f'Response: {response.text}')
 
 if __name__ == "__main__":
     main()
