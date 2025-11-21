@@ -32,7 +32,7 @@ def run_python_file(working_directory, file_path, args=[]):
 
         result = f"STDOUT: {out}\nSTDERR: {err}"
         if execute.returncode != 0:
-            result += f"\nProcess exited with code {execute.returncode}"
+            result += f"Process exited with code {execute.returncode}"
         return result
     except Exception as e:
         return f'Error executing Python file: {e}'

@@ -27,11 +27,7 @@ class Calculator:
 
         for token in tokens:
             if token in self.operators:
-                while (
-                    operators
-                    and operators[-1] in self.operators
-                    and self.precedence[operators[-1]] >= self.precedence[token]
-                ):
+                while (operators and operators[-1] in self.operators and self.precedence[operators[-1]] >= self.precedence[token]):
                     self._apply_operator(operators, values)
                 operators.append(token)
             else:
@@ -59,3 +55,14 @@ class Calculator:
         b = values.pop()
         a = values.pop()
         values.append(self.operators[operator](a, b))
+
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) > 1:
+        tokens = sys.argv[1:]
+        calculator = Calculator()
+        try:
+            result = calculator.evaluate(tokens)
+            print(result)
+        except Exception as e:
+            print(f"Error: {e}")
